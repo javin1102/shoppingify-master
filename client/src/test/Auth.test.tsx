@@ -1,8 +1,19 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import Register from "../pages/auth/Register";
-import { loginFormIsValid, registerFormIsValid } from "../utils/AuthUtils";
+import {
+	loginFormIsValid,
+	registerFormIsValid,
+	registerUser,
+} from "../utils/AuthUtils";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
+import axios from "axios";
+import { act } from "react-dom/test-utils";
+import MockAdapter from "axios-mock-adapter/types";
+jest.mock("axios", () => ({
+	...jest.requireActual("axios"),
+	post: jest.fn(),
+}));
 
 describe("Register Form", () => {
 	describe("Register form validity (submittable)", () => {
@@ -31,31 +42,80 @@ describe("Register Form", () => {
 			expect(registerFormIsValid(email, password, confirm)).toBeTruthy();
 		});
 	});
-
-	it("should register user", () => {
-		const mock = jest.spyOn(console, "log");
+	it("should register user", async () => {
+		const mockedAxios = axios as jest.Mocked<typeof axios>;
+		const mockedData = {
+			message: "OK",
+			errors: "",
+		};
+		mockedAxios.post.mockResolvedValue(mockedData);
+		const email = "javinrio23@gmail.com";
+		const password = "password123";
+		await registerUser(email, password);
+		expect(mockedAxios.post).toHaveBeenCalledTimes(1);
+		expect(
+			mockedAxios.post("", {
+				email,
+				password,
+				password_confirmation: password,
+			}),
+		).resolves.toEqual(mockedData);
+	});
+	it("should not register user", async () => {
+		const mockedAxios = axios as jest.Mocked<typeof axios>;
+		const mockedData = {
+			message: "",
+			errors: "Invalid Email",
+		};
+		mockedAxios.post.mockRejectedValue(mockedData);
+		const email = "javinrio23gmail.com";
+		const password = "password123";
+		await registerUser(email, password);
+		expect(mockedAxios.post).toHaveBeenCalled();
+		expect(
+			mockedAxios.post("", {
+				email,
+				password,
+				password_confirmation: password,
+			}),
+		).rejects.toEqual(mockedData);
+	});
+	it("should register user, (full set)", async () => {
 		render(
 			<BrowserRouter>
 				<Register />
 			</BrowserRouter>,
 		);
-		fireEvent.input(screen.getByRole("textbox", { name: /email/i }), {
-			target: {
-				value: "javinr2@gmail.com",
-			},
+		act(() => {
+			fireEvent.input(screen.getByRole("textbox", { name: /email/i }), {
+				target: {
+					value: "javinr2@gmail.com",
+				},
+			});
 		});
-		fireEvent.input(screen.getByLabelText("Password"), {
-			target: {
-				value: "javinrio112",
-			},
+		act(() => {
+			fireEvent.input(screen.getByLabelText("Password"), {
+				target: {
+					value: "javinrio112",
+				},
+			});
 		});
-		fireEvent.input(screen.getByLabelText("Confirm Password"), {
-			target: {
-				value: "javinrio112",
-			},
+		act(() => {
+			fireEvent.input(screen.getByLabelText("Confirm Password"), {
+				target: {
+					value: "javinrio112",
+				},
+			});
 		});
-		fireEvent.submit(screen.getByText("Register"));
-		expect(mock).toHaveBeenCalled();
+		act(() => {
+			fireEvent.submit(screen.getByText("Register"));
+		});
+
+		expect(axios.post).toHaveBeenCalledWith("/auth/register", {
+			email: "javinr2@gmail.com",
+			password: "javinrio112",
+			password_confirmation: "javinrio112",
+		});
 	});
 });
 

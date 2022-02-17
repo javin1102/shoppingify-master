@@ -1,3 +1,5 @@
+import axios, { AxiosError, AxiosStatic } from "axios";
+
 export const validateEmail = (email: string) => {
 	return String(email)
 		.toLowerCase()
@@ -19,6 +21,18 @@ export const registerFormIsValid = (
 	!validateEmail(email)
 		? false
 		: true;
-
+export const registerUser = async (email: string, password: string) => {
+	try {
+		const feedback = await axios.post("/auth/register", {
+			email,
+			password,
+			password_confirmation: password,
+		});
+		console.log(feedback);
+	} catch (error) {
+		const err = error as AxiosError;
+		console.error(err.response?.data);
+	}
+};
 export const loginFormIsValid = (email: string, password: string) =>
 	!validateEmail(email) || !password ? false : true;

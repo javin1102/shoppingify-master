@@ -9,16 +9,17 @@ import {
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import React, { useState } from "react";
-import { registerFormIsValid } from "../../utils/AuthUtils";
+import { registerFormIsValid, registerUser } from "../../utils/AuthUtils";
 const Register = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [confirm, setConfirm] = useState<string>("");
 
-	const formSubmitHandler = (e: React.FormEvent) => {
+	const formSubmitHandler = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!registerFormIsValid(email, password, confirm)) return;
-		console.log("Register");
+		registerUser(email, password);
+		console.log("asd");
 		setEmail("");
 		setPassword("");
 		setConfirm("");
@@ -59,11 +60,13 @@ const Register = () => {
 					/>
 				</InputDiv>
 				<InputDiv>
-					<LabelField htmlFor="confirm">Confirm Password</LabelField>
+					<LabelField htmlFor="password_confirmation">
+						Confirm Password
+					</LabelField>
 					<InputField
 						type="password"
-						name="confirm"
-						id="confirm"
+						name="password_confirmation"
+						id="password_confirmation"
 						onChange={(e) => setConfirm(e.target.value)}
 						value={confirm}
 					/>

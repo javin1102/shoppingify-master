@@ -10,12 +10,23 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import Logo from "../../images/logo.svg";
 import { loginFormIsValid } from "../../utils/AuthUtils";
+import axios, { AxiosError } from "axios";
 const Login = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const formOnSubmit = (e: React.FormEvent) => {
+	const formOnSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!loginFormIsValid) return;
+		try {
+			const feedback = await axios.post("/auth/login", {
+				email,
+				password,
+			});
+		} catch (error) {
+			const err = error as AxiosError;
+			console.error(err.response?.data);
+			return;
+		}
 		console.log("Login");
 		setEmail("");
 		setPassword("");
