@@ -78,7 +78,7 @@ jobs:
             - vendor
       - run:
           name: config mysql
-          command: sudo mysql -u root -h 127.0.0.1
+          command: sudo mysql -u root -h 127.0.0.1 -c
       - run:
           name: Populate .env
           command: cp .env.example .env && php artisan key:generate
