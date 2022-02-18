@@ -59,7 +59,8 @@ jobs:
       - run:
           name: Install PHP Extensions
           command: |
-            sudo docker-php-ext-configure mcrypt gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+            sudo docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+            sudo docker-php-ext-enable mcrypt
             sudo docker-php-ext-install -j$(nproc) iconv mcrypt gd zip pdo_mysql pdo_sqlite
             sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
