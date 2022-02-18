@@ -23,4 +23,5 @@ jobs:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run: npm run test
-      - run: vercel --prod --confirm
+      - run: vercel login --github
+      - run: vercel --confirm
