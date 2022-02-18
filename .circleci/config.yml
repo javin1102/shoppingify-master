@@ -3,12 +3,10 @@ orbs:
   node: circleci/node@5.0.0
 
 jobs:
-  build:
+  build_react:
     docker:
       - image: "cimg/node:16.7"
-
     working_directory: ~/shoppingify-master/client
-
     steps:
       - checkout:
           path: ~/shoppingify-master
@@ -28,3 +26,82 @@ jobs:
           when: on_success
           command: DEPLOY_STG="curl -x GET https://api.vercel.com/v1/integrations/deploy/prj_6tRcSTLdT6kNWaypZFRt4SUrSbZj/sflEm0X0QG"
       - run: bash -c "$DEPLOY_STG"
+<<<<<<< HEAD
+=======
+
+  build_laravel:
+    
+    working_directory: ~/shoppingify-master/server
+    environment:
+      BASH_ENV: ~/.bashrc
+    docker:
+      - image: circleci/php:8
+        environment:
+          APP_ENV: testing
+          DB_CONNECTION: mysql
+          DB_DATABASE: circle_test
+          DB_USERNAME: root
+          DB_PASSWORD: ubuntu
+          SESSION_DRIVER: database
+          CACHE_DRIVER: file
+      - image: circleci/mysql:5.7
+        environment:
+          - MYSQL_ALLOW_EMPTY_PASSWORD=true
+          - MYSQL_ROOT_PASSWORD=ubuntu
+          - MYSQL_USER=ubuntu
+          - MYSQL_PASSWORD=ubuntu
+          - MYSQL_DATABASE=circle_test
+
+    steps:
+      - checkout:
+          path: ~/shoppingify-master/
+
+      - run:
+          name: Install System Dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libmcrypt-dev libsqlite3-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev
+      - run:
+          name: Install PHP Extensions
+          command: |
+            sudo docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+            sudo docker-php-ext-install -j$(nproc) iconv gd zip pdo_mysql pdo_sqlite
+            sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+
+      - restore_cache:
+          keys:
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
+
+      - run:
+          name: Install Composer Dependencies
+          command: composer install -n --ignore-platform-reqs
+
+      - save_cache:
+          key: composer-v1-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+         name: Migrate Database
+         command: php artisan migrate --force
+      - run:
+          name: Run Unit Tests
+          environment:
+            DB_CONNECTION: sqlite-memory
+          command: |
+            mkdir -p ./logs/phpunit
+            vendor/bin/phpunit -d memory_limit=512M --log-junit logs/phpunit/junit.xml --testdox-html logs/phpunit/testdox.html
+      
+
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build_laravel
+      - build_react
+
+        
+
+>>>>>>> 28e18bacbe4811c8584a7b4175ab288c4e206336
