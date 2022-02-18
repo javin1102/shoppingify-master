@@ -9,7 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import Logo from "../../images/logo.svg";
-import { loginFormIsValid } from "../../utils/AuthUtils";
+import { loginFormIsValid, loginUser } from "../../utils/AuthUtils";
 import axios, { AxiosError } from "axios";
 const Login = () => {
 	const [email, setEmail] = useState<string>("");
@@ -17,16 +17,7 @@ const Login = () => {
 	const formOnSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!loginFormIsValid) return;
-		try {
-			const feedback = await axios.post("/auth/login", {
-				email,
-				password,
-			});
-		} catch (error) {
-			const err = error as AxiosError;
-			console.error(err.response?.data);
-			return;
-		}
+		loginUser(email, password);
 		console.log("Login");
 		setEmail("");
 		setPassword("");

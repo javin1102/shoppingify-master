@@ -5,14 +5,20 @@ import ItemPage from "./pages/ItemPage";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import "./App.css";
+import axios from "axios";
 function App() {
+	axios.defaults.baseURL = process.env.REACT_APP_BASE_API_URL;
 	return (
 		<>
 			<div className="App">
 				<Helmet>
 					<title>Shoppingify</title>
 					<link rel="preconnect" href="https://fonts.googleapis.com" />
-					<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+					<link
+						rel="preconnect"
+						href="https://fonts.gstatic.com"
+						crossOrigin="true"
+					/>
 					<link
 						href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
 						rel="stylesheet"
