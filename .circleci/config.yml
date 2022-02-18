@@ -33,7 +33,7 @@ jobs:
     environment:
       BASH_ENV: ~/.bashrc
     docker:
-      - image: circleci/php:7.1-node-browsers
+      - image: circleci/php:8
         environment:
           APP_ENV: testing
           DB_CONNECTION: mysql
@@ -51,16 +51,6 @@ jobs:
           - MYSQL_DATABASE=circle_test
 
     steps:
-
-      - run:
-          name: Install System Dependencies
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y libmcrypt-dev libsqlite3-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev
-      
-      - run:
-          name: Update Composer
-          command: sudo composer self-update
 
       - checkout:
           path: ~/shoppingify-master/
