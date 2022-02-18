@@ -41,13 +41,13 @@ jobs:
           DB_PASSWORD: ubuntu
           SESSION_DRIVER: database
           CACHE_DRIVER: file
-      - image: circleci/mysql:5.7
+      - image: circleci/mysql
         environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD=true
-          - MYSQL_ROOT_PASSWORD=ubuntu
-          - MYSQL_USER=ubuntu
-          - MYSQL_PASSWORD=ubuntu
-          - MYSQL_DATABASE=circle_test
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_PASSWORD: ubuntu
+          MYSQL_USER: ubuntu
+          MYSQL_PASSWORD: ubuntu
+          MYSQL_DATABASE: circle_test
 
     steps:
       - checkout:
