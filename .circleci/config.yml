@@ -3,11 +3,11 @@ orbs:
   node: circleci/node@4.7
 
 jobs:
-  install-node:
+  build:
     working_directory: ~/shoppingify-master/client
     docker:
       - image: "cimg/node:16.10"
-    
+
     steps:
       - checkout:
           path: ~/shoppingify-master
