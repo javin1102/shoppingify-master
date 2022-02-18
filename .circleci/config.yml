@@ -78,7 +78,7 @@ jobs:
             - vendor
       - run:
           name: config mysql
-          command: mysqladmin create shoppingify --host="127.0.0.1" --user="root" --password=""
+          command: sudo mysql create shoppingify --host="127.0.0.1" --user="root" --password=""
       - run:
           name: Populate .env
           command: cp .env.example .env && php artisan key:generate
