@@ -4,11 +4,15 @@ orbs:
 
 jobs:
   install-node:
+    working_directory: ~/shoppingify-master/client
     docker:
       - image: "cimg/node:16.10"
+    
     steps:
-      - checkout
+      - checkout:
+          path: ~/shoppingify-master
       - node/install:
           install-yarn: true
           node-version: "16.13"
       - run: node --version
+
