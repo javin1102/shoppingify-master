@@ -18,3 +18,4 @@ workflows:
     jobs:
       - node/run:
           npm-run: build
+          app-dir: ~/client
