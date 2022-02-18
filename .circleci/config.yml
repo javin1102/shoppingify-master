@@ -43,7 +43,7 @@ jobs:
           CACHE_DRIVER: file
       - image: circleci/mysql:5.7
         environment:
-          - MYSQL_ROOT_PASSWORD=root
+          MYSQL_ROOT_PASSWORD: root
 
     steps:
       - checkout:
@@ -84,7 +84,9 @@ jobs:
           command: cp .env.example .env && php artisan key:generate
       - run:
           name: Migrate Database
-          command: php artisan migrate --env=example --force
+          command: |
+            php artisan config:clear
+            php artisan migrate --env=example --force
       - run:
           name: Run Unit Tests
           environment:
