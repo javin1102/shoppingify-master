@@ -77,9 +77,7 @@ jobs:
           key: composer-v1-{{ checksum "composer.lock" }}
           paths:
             - vendor
-      - run:
-          name: config mysql
-          command: sudo mysql -u root -p
+            
       - run:
           name: Migrate Database
           command: php artisan migrate --force
