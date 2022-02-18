@@ -68,6 +68,16 @@ jobs:
           key: composer-v1-{{ checksum "composer.lock" }}
           paths:
             - vendor
+      - run:
+         name: Migrate Database
+         command: php artisan migrate --force
+      - run:
+          name: Run Unit Tests
+          environment:
+            DB_CONNECTION: sqlite-memory
+          command: |
+            mkdir -p ./logs/phpunit
+            vendor/bin/phpunit -d memory_limit=512M --log-junit logs/phpunit/junit.xml --testdox-html logs/phpunit/testdox.html
       
 
 
