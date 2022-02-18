@@ -78,7 +78,7 @@ jobs:
             - vendor
       - run:
           name: config mysql
-          command: sleep 2 && docker exec -i database mysql -u root -ppass --database=shoppingify < dump.sql
+          command: mysqladmin create shoppingify --host="127.0.0.1" --user="root" --password=""
       - run:
           name: Populate .env
           command: cp .env.example .env && php artisan key:generate
