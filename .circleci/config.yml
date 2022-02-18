@@ -51,8 +51,7 @@ jobs:
           - MYSQL_DATABASE=circle_test
 
     steps:
-      - checkout:
-          path: ~/shoppingify-master/
+
       - run:
           name: Install System Dependencies
           command: |
@@ -63,7 +62,8 @@ jobs:
           name: Update Composer
           command: sudo composer self-update
 
-
+      - checkout:
+          path: ~/shoppingify-master/
 
       - restore_cache:
           keys:
