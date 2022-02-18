@@ -43,7 +43,7 @@ jobs:
           CACHE_DRIVER: file
       - image: circleci/mysql:5.7
         environment:
-          - MYSQL_ROOT_PASSWORD=root
+          MYSQL_ROOT_PASSWORD: root
 
     steps:
       - checkout:
