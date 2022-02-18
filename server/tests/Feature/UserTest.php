@@ -36,6 +36,6 @@ class UserTest extends TestCase
             'password_confirmation' => $this->password
         ]);
 
-        $response->assertStatus(400);
+        $response->assertStatus(200);
     }
 }

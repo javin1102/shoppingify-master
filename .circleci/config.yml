@@ -78,7 +78,7 @@ jobs:
             - vendor
       - run:
           name: config mysql
-          command: mysqladmin create test --host="127.0.0.1" --user="root" --password="root"
+          command: mysqladmin create server --host="127.0.0.1" --user="root" --password="root"
       - run:
           name: Populate .env
           command: cp .env.example .env && php artisan key:generate
