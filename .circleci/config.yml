@@ -11,6 +11,6 @@ jobs:
     
     steps:
       - checkout:
-           path: ~/shoppingify-master
+           path: ~/shoppingify-master/client
       - run: npm install
 
