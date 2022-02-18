@@ -12,12 +12,11 @@ jobs:
           install-yarn: true
           node-version: "16.13"
       - run: node --version
-
+working_directory: ~/client
 workflows:
   
   run-npm-command:
     jobs:
       - node/run:
-          working_directory: ~/client
           npm-run: build
           app-dir: ~/client
