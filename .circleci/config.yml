@@ -62,8 +62,7 @@ jobs:
           name: Update Composer
           command: sudo composer self-update
 
-      - checkout:
-          path: ~/shoppingify-master
+      - checkout
 
       - restore_cache:
           keys:
