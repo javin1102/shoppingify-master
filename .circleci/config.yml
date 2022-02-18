@@ -77,8 +77,8 @@ jobs:
           paths:
             - vendor
       - run:
-          name: config mysql
-          command: sudo mysql -u root
+          name: Populate .env
+          command: cp .env.example .env && php artisan key:generate
       - run:
           name: Migrate Database
           command: php artisan migrate --force
