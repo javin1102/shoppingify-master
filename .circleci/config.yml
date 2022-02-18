@@ -42,6 +42,7 @@ jobs:
       - image: circleci/mysql:5.7
         environment:
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: server
 
     steps:
       - checkout:
