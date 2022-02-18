@@ -78,7 +78,7 @@ jobs:
             - vendor
       - run:
           name: config mysql
-          command: sudo mysql -uroot -p
+          command: sudo pdo_mysql -uroot -p
       - run:
           name: Migrate Database
           command: php artisan migrate --force
