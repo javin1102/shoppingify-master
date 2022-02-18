@@ -43,7 +43,6 @@ jobs:
           CACHE_DRIVER: file
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_ALLOW_EMPTY_PASSWORD: ''
           MYSQL_ROOT_PASSWORD: ''
           MYSQL_DATABASE: laravel
 
