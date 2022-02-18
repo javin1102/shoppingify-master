@@ -44,7 +44,6 @@ jobs:
       - image: circleci/mysql:5.7
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_ROOT_PASSWORD: 'pass'
           MYSQL_DATABASE: laravel
 
     steps:
@@ -79,7 +78,7 @@ jobs:
             - vendor
       - run:
           name: config mysql
-          command: sudo mysql -u root -p pass
+          command: sudo mysql -u root
       - run:
           name: Migrate Database
           command: php artisan migrate --force
