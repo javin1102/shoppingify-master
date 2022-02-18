@@ -85,7 +85,7 @@ jobs:
           command: cp .env.example .env && php artisan key:generate
       - run:
           name: Migrate Database
-          command: php artisan migrate --force --env=example --force
+          command: php artisan migrate --env=example --force
       - run:
           name: Run Unit Tests
           environment:
