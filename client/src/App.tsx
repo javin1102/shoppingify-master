@@ -25,6 +25,7 @@ function App() {
 					></link>
 				</Helmet>
 				<Router>
+					<h2>Halo</h2>
 					<Routes>
 						<Route path="/register" element={<Register />} />
 						<Route path="/login" element={<Login />} />

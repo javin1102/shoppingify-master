@@ -1,21 +1,26 @@
 version: 2.1
 orbs:
-  node: circleci/node@4.7
+  node: circleci/node@5.0.0
 
 jobs:
-  install-node:
+  build:
     docker:
-      - image: "cimg/node:16.10"
-    steps:
-      - checkout
-      - node/install:
-          install-yarn: true
-          node-version: "16.13"
-      - run: node --version
+      - image: "cimg/node:16.7"
 
-workflows:
-  run-npm-command:
-    jobs:
-      - node/run:
-          npm-run: build
-          app-dir: ~/client
+    working_directory: ~/shoppingify-master/client
+
+    steps:
+      - checkout:
+          path: ~/shoppingify-master
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{checksum "package.json"}}
+            - v1-dependencies
+      - run: npm install
+      - run: npm install -g vercel
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{checksum "package.json"}}
+      - run: npm run test
+      - run: vercel --prod --confirm
