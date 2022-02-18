@@ -6,7 +6,6 @@ jobs:
   build:
     docker:
       - image: "cimg/node:16.7"
-<<<<<<< HEAD
 
     working_directory: ~/shoppingify-master/client
 
@@ -25,24 +24,3 @@ jobs:
           key: v1-dependencies-{{checksum "package.json"}}
       - run: npm run test
       - run: vercel --prod --confirm
-=======
-
-    working_directory: ~/shoppingify-master/client
-    
-    steps:
-      - checkout:
-          path: ~/shoppingify-master
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{checksum "package.json"}}
-            - v1-dependencies
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{checksum "package.json"}}
-      - run: npm run test
-      
-
-
->>>>>>> 7f591b174d3bbdd4d35df9ec384eff2ec17d577f
