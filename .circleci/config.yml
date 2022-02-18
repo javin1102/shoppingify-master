@@ -28,6 +28,10 @@ jobs:
       - run: bash -c "$DEPLOY_STG"
 
   build_laravel:
+    
+    working_directory: ~/shoppingify-master/server
+    environment:
+      BASH_ENV: ~/.bashrc
     docker:
       - image: circleci/php:7.4-node-browsers
         environment:
@@ -46,7 +50,6 @@ jobs:
           - MYSQL_PASSWORD=ubuntu
           - MYSQL_DATABASE=circle_test
 
-    working_directory: ~/shoppingify-master/server
     steps:
       - checkout:
           path: ~/shoppingify-master
