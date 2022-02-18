@@ -43,8 +43,7 @@ jobs:
           CACHE_DRIVER: file
       - image: circleci/mysql:5.7
         environment:
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: laravel
+          - MYSQL_ROOT_PASSWORD=root
 
     steps:
       - checkout:
@@ -59,9 +58,11 @@ jobs:
           name: Install PHP Extensions
           command: |
             sudo docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
+            sudo docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
             sudo docker-php-ext-install -j$(nproc) iconv gd zip pdo_mysql pdo_sqlite
             sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
             sudo apt install -y mariadb-client
+           
 
       - restore_cache:
           keys:
@@ -78,7 +79,7 @@ jobs:
             - vendor
       - run:
           name: config mysql
-          command: sudo mysql create shoppingify --host="127.0.0.1" --user="root" --password=""
+          command: mysqladmin create test --host="127.0.0.1" --user="root" --password="root"
       - run:
           name: Populate .env
           command: cp .env.example .env && php artisan key:generate
