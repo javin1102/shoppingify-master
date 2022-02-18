@@ -26,5 +26,5 @@ jobs:
       - run:
           name: deployment
           when: on_success
-          command: curl -x POST https://api.vercel.com/v1/integrations/deploy/prj_6tRcSTLdT6kNWaypZFRt4SUrSbZj/sflEm0X0QG
+          command: curl -x GET https://api.vercel.com/v1/integrations/deploy/prj_6tRcSTLdT6kNWaypZFRt4SUrSbZj/sflEm0X0QG
 
