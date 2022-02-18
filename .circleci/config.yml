@@ -63,7 +63,7 @@ jobs:
           command: sudo composer self-update
 
       - checkout:
-          path: ~/shoppingify-master
+          path: ~/shoppingify-master/server
 
       - restore_cache:
           keys:
