@@ -60,6 +60,13 @@ class UserController extends Controller
             ], 200);
         }
 
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) return response()->json([
+            'message' => '',
+            'errors' => 'Email not found!'
+        ], 400);
+
         return response()->json([
             'message' => '',
             'errors' => 'Email and password does not match'

@@ -23,10 +23,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run: npm run test
-      - run: 
+      - run:
           name: deployment setup
           when: on_success
           command: DEPLOY_STG="curl -x GET https://api.vercel.com/v1/integrations/deploy/prj_6tRcSTLdT6kNWaypZFRt4SUrSbZj/sflEm0X0QG"
       - run: bash -c "$DEPLOY_STG"
-        
-

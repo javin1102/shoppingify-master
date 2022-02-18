@@ -129,7 +129,7 @@ describe("Login Form", () => {
 		it("should be valid, able to submit", () => {
 			const email = "javin23@qwere.com";
 			const password = "password123";
-			expect(loginFormIsValid(email, password)).toBeFalsy();
+			expect(loginFormIsValid(email, password)).toBeTruthy();
 		});
 	});
 });
