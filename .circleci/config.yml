@@ -51,8 +51,11 @@ jobs:
       - checkout:
           path: ~/shoppingify-master
       - run:
+          name: Update Composer
+          command: sudo composer self-update
+      - run:
           name: Install Composer Dependencies
-          command: composer install 
+          command: composer install
       
 
 
