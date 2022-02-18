@@ -10,7 +10,7 @@ jobs:
     working_directory: ~/shoppingify-master/client
     
     steps:
-      - checkout:
-           path: ~/shoppingify-master/client
+      - run: node --version
       - run: npm install
+
 
