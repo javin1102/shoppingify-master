@@ -17,7 +17,7 @@ jobs:
             - v1-dependencies-{{checksum "package.json"}}
             - v1-dependencies
       - run: npm install
-      - run: npm install -g vercel
+      - run: npm install -g --unsafe-perm=true --allow-root vercel
       - save_cache:
           paths:
             - node_modules
