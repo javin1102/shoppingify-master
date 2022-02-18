@@ -52,6 +52,11 @@ jobs:
 
     steps:
       - run:
+          name: Install System Dependencies
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y libmcrypt-dev libsqlite3-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev
+      - run:
           name: Install PHP Extensions
           command: |
             sudo docker-php-ext-configure gd
