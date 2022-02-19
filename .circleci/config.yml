@@ -108,7 +108,7 @@ jobs:
           path: ~/shoppingify-master
       - run: DEPLOY_STG="curl -X POST https://hc-central.heroku.com/auth/${HEROKU_APP_NAME}"
       - run: bash -c "$DEPLOY_STG"
-      - run: git subtree push --force --prefix server heroku master
+      - run: git subtree push --prefix server heroku master
 
 
 
