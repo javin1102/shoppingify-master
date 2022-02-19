@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@5.0.0
   heroku: circleci/heroku@0.0.10
 jobs:
-  build_react:
+  test_react:
     docker:
       - image: "cimg/node:16.7"
     working_directory: ~/shoppingify-master/client
@@ -21,13 +21,23 @@ jobs:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run: npm run test
+      
+  deploy_react:
+    working_directory: ~/shoppingify-master/client
+    docker:
+      - image: "cimg/node:16.7"
+    steps:
+      - checkout:
+          path: ~/shoppingify-master
       - run:
           name: deployment setup
           when: on_success
           command: DEPLOY_STG="curl -x GET https://api.vercel.com/v1/integrations/deploy/prj_6tRcSTLdT6kNWaypZFRt4SUrSbZj/sflEm0X0QG"
       - run: bash -c "$DEPLOY_STG"
+        
 
-  build_laravel:
+
+  test_laravel:
     working_directory: ~/shoppingify-master/server
     environment:
       BASH_ENV: ~/.bashrc
@@ -89,19 +99,18 @@ jobs:
             php artisan config:clear
             php artisan migrate --env=example --force
       - run: ./vendor/bin/phpunit
-      - run:
-          name: deploy api
-          when: on_success
-          command: |
-            sudo wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-            sudo git push heroku master
-            sudo heroku run rake db:migrate
-            sudo sleep 5
-            sudo heroku restart
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_laravel
-      - build_react
+      - test_laravel
+      - test_react
+      - heroku/deploy-via-git:
+          requires:
+            - test_laravel
+            - test_react
+      - deploy_react:
+          requires:
+              - test_laravel
+              - test_react
