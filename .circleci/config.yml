@@ -106,7 +106,8 @@ jobs:
     steps:
       - checkout:
           path: ~/shoppingify-master
-      - heroku/deploy-via-git
+      - run: DEPLOY_STG="curl -X POST https://hc-central.heroku.com/auth/${HEROKU_APP_NAME}"
+      - run: bash -c "$DEPLOY_STG"
 
 
 
