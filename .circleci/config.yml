@@ -104,7 +104,7 @@ workflows:
       - test_react
       - heroku/deploy-via-git:
           pre-steps:
-            - run: git pull
+            - run: sudo git pull shoppingify-master master
           requires:
             - test_laravel
             - test_react
