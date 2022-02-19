@@ -111,10 +111,11 @@ jobs:
 
       - run:
           command: |
-            git push heroku master
-            heroku run rake db:migrate
-            sleep 5
-            heroku restart
+            sudo heroku git:remote -a shoppingifyapi
+            sudo git push heroku master
+            sudo heroku run rake db:migrate
+            sudo sleep 5
+            sudo heroku restart
 
 
 workflows:
