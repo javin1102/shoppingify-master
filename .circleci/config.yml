@@ -97,8 +97,8 @@ jobs:
       - run: ./vendor/bin/phpunit
 
   deploy_laravel:
-    docker:
-      - image: circleci/php:8
+    machine:
+      enabled: true
     working_directory: ~/shoppingify-master
     environment:
       BASH_ENV: ~/.bashrc
