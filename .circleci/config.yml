@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.0
-
+  heroku: circleci/heroku@0.0.10
 jobs:
   build_react:
     docker:
@@ -94,7 +94,6 @@ jobs:
           when: on_success
           command: |
             sudo wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-            sudo heroku git:remote -a shoppingifyapi
             sudo git push heroku master
             sudo heroku run rake db:migrate
             sudo sleep 5
