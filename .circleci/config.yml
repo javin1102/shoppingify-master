@@ -1,9 +1,9 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.0
-
+  heroku: circleci/heroku@0.0.10
 jobs:
-  build_react:
+  test_react:
     docker:
       - image: "cimg/node:16.7"
     working_directory: ~/shoppingify-master/client
@@ -21,16 +21,26 @@ jobs:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run: npm run test
+
+  deploy_react:
+    working_directory: ~/shoppingify-master/client
+    docker:
+      - image: "cimg/node:16.7"
+    steps:
+      - checkout:
+          path: ~/shoppingify-master
       - run:
           name: deployment setup
           when: on_success
           command: DEPLOY_STG="curl -x GET https://api.vercel.com/v1/integrations/deploy/prj_6tRcSTLdT6kNWaypZFRt4SUrSbZj/sflEm0X0QG"
       - run: bash -c "$DEPLOY_STG"
 
-  build_laravel:
+  test_laravel:
     working_directory: ~/shoppingify-master/server
     environment:
       BASH_ENV: ~/.bashrc
+      HEROKU_APP: "shoppingifyapi"
+
     docker:
       - image: circleci/php:8
         environment:
@@ -52,7 +62,7 @@ jobs:
           name: Install System Dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y libmcrypt-dev libsqlite3-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev 
+            sudo apt-get install -y libmcrypt-dev libsqlite3-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev
       - run:
           name: Install PHP Extensions
           command: |
@@ -87,19 +97,18 @@ jobs:
             php artisan config:clear
             php artisan migrate --env=example --force
       - run: ./vendor/bin/phpunit
-      - run:
-          name: deploy api
-          when: on_success
-          command: |
-          bash .circleci/setup-heroku.sh
-          git push heroku shoppingify-master:master
-          heroku run rake db:migrate
-          sleep 5 # sleep for 5 seconds to wait for dynos
-          heroku restart
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build_laravel
-      - build_react
+      - test_laravel
+      - test_react
+      - heroku/deploy-via-git:
+          requires:
+            - test_laravel
+            - test_react
+      - deploy_react:
+          requires:
+            - test_laravel
+            - test_react
