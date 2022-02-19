@@ -103,6 +103,8 @@ workflows:
       - test_laravel
       - test_react
       - heroku/deploy-via-git:
+          pre-steps:
+            - run: git pull
           requires:
             - test_laravel
             - test_react
