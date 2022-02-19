@@ -21,7 +21,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{checksum "package.json"}}
       - run: npm run test
-
   deploy_react:
     working_directory: ~/shoppingify-master/client
     docker:
@@ -40,7 +39,6 @@ jobs:
     environment:
       BASH_ENV: ~/.bashrc
       HEROKU_APP: "shoppingifyapi"
-
     docker:
       - image: circleci/php:8
         environment:
