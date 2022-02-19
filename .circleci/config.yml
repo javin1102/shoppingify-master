@@ -93,11 +93,11 @@ jobs:
           name: deploy api
           when: on_success
           command: |
-            wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-            git push heroku master
-            heroku run rake db:migrate
-            sleep 5
-            heroku restart
+            sudo wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+            sudo git push heroku master
+            sudo heroku run rake db:migrate
+            sudo sleep 5
+            sudo heroku restart
 
 workflows:
   version: 2
