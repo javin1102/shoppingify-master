@@ -107,7 +107,7 @@ jobs:
           path: ~/shoppingify-master
       - run:
           name: Setup Heroku
-          command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
+          command:  wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh # run a script to set up Heroku
 
       - run:
           command: |
