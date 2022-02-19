@@ -123,6 +123,10 @@ workflows:
     jobs:
       - test_laravel
       - test_react
+      - deploy_laravel:
+          requires:
+            - test_laravel
+            - test_react
       - deploy_react:
           requires:
             - test_laravel
