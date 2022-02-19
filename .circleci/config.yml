@@ -97,13 +97,15 @@ jobs:
       - run: ./vendor/bin/phpunit
 
   deploy_laravel:
-    working_directory: ~/shoppingify-master/server
+    working_directory: ~/shoppingify-master
     environment:
       BASH_ENV: ~/.bashrc
       HEROKU_APP: "shoppingifyapi"
     docker:
       - image: circleci/php:8
     steps:
+      - checkout:
+          path: ~/shoppingify-master
       - heroku/deploy-via-git
 
 
