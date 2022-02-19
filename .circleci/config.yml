@@ -97,18 +97,29 @@ jobs:
       - run: ./vendor/bin/phpunit
 
   deploy_laravel:
+    machine:
+      enabled: true
     working_directory: ~/shoppingify-master
     environment:
       BASH_ENV: ~/.bashrc
       HEROKU_APP: "shoppingifyapi"
-    docker:
-      - image: circleci/php:8
+
     steps:
       - checkout:
           path: ~/shoppingify-master
       - run: wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-      - run: DEPLOY_STG="curl -X POST https://hc-central.heroku.com/auth/${HEROKU_APP_NAME}"
-      - run: bash -c "$DEPLOY_STG"
+      - run: 
+          command: |
+            cat ~/.netrc
+              machine api.heroku.com
+              login $HEROKU_EMAIL
+              password $HEROKU_TOKEN
+              machine git.heroku.com
+                login $HEROKU_EMAIL
+                password $HEROKU_TOKEN
+              EOF
+            chmod 600 ~/.netrc
+
       - run: git subtree push --prefix server heroku master
 
 
