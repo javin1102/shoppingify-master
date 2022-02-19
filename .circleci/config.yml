@@ -95,6 +95,27 @@ jobs:
             php artisan config:clear
             php artisan migrate --env=example --force
       - run: ./vendor/bin/phpunit
+      
+  deploy_laravel:
+    working_directory: ~/shoppingify-master/server
+    environment:
+      HEROKU_APP: "shoppingifyapi"
+    docker:
+      - image: circleci/php:8
+    steps:
+      - checkout:
+          path: ~/shoppingify-master
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
+
+      - run:
+          command: |
+            git push heroku master
+            heroku run rake db:migrate
+            sleep 5
+            heroku restart
+
 
 workflows:
   version: 2
@@ -102,12 +123,6 @@ workflows:
     jobs:
       - test_laravel
       - test_react
-      - heroku/deploy-via-git:
-          pre-steps:
-            - run: sudo git pull shoppingify-master master
-          requires:
-            - test_laravel
-            - test_react
       - deploy_react:
           requires:
             - test_laravel
