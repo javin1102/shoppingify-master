@@ -111,8 +111,7 @@ jobs:
 
       - run:
           command: |
-            sudo heroku git:remote -a shoppingifyapi
-            sudo git push heroku master
+            sudo git push heroku master:main
             sudo heroku run rake db:migrate
             sudo sleep 5
             sudo heroku restart
