@@ -119,7 +119,7 @@ jobs:
                 password $HEROKU_TOKEN
               EOF
             chmod 600 ~/.netrc
-
+      - run: heroku git:remote -a shoppingifyapi
       - run: git subtree push --prefix server heroku master
 
 
