@@ -106,8 +106,9 @@ jobs:
     steps:
       - checkout:
           path: ~/shoppingify-master
-      - run: DEPLOY_STG="curl -X POST https://hc-central.heroku.com/auth/${HEROKU_APP_NAME}"
-      - run: bash -c "$DEPLOY_STG"
+      # - run: DEPLOY_STG="curl -X POST https://hc-central.heroku.com/auth/${HEROKU_APP_NAME}"
+      # - run: bash -c "$DEPLOY_STG"
+      - run: wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
       - run: git subtree push --prefix server heroku master
 
 
