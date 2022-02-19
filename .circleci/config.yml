@@ -91,11 +91,11 @@ jobs:
           name: deploy api
           when: on_success
           command: |
-          bash .circleci/setup-heroku.sh
-          git push heroku shoppingify-master:master
-          heroku run rake db:migrate
-          sleep 5 # sleep for 5 seconds to wait for dynos
-          heroku restart
+            bash .circleci/setup-heroku.sh
+            git push heroku shoppingify-master:master
+            heroku run rake db:migrate
+            sleep 5
+            heroku restart
 
 workflows:
   version: 2
