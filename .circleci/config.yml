@@ -97,16 +97,17 @@ jobs:
       - run: ./vendor/bin/phpunit
 
   deploy_laravel:
+    docker:
+    - image: "cimg/node:16.7"
     working_directory: ~/shoppingify-master
     environment:
       BASH_ENV: ~/.bashrc
       HEROKU_APP: "shoppingifyapi"
-    docker:
-      - image: circleci/php:8
     steps:
       - checkout:
           path: ~/shoppingify-master
-      - heroku/deploy-via-git
+      - run: wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      - run: git subtree push --prefix server https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
 
 
 
