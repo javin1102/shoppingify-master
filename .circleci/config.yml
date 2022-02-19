@@ -94,7 +94,7 @@ jobs:
           when: on_success
           command: |
             wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
-            git push heroku shoppingify-master:master
+            git push heroku shoppingifyapi:master
             heroku run rake db:migrate
             sleep 5
             heroku restart
