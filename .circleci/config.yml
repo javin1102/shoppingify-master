@@ -32,6 +32,7 @@ jobs:
     environment:
       BASH_ENV: ~/.bashrc
       HEROKU_APP: "shoppingifyapi"
+    
     docker:
       - image: circleci/php:8
         environment:
@@ -92,7 +93,7 @@ jobs:
           name: deploy api
           when: on_success
           command: |
-            bash .circleci/setup-heroku.sh
+            wget -qO- https://cli-assets.heroku.com/install-ubuntu.sh | sh
             git push heroku shoppingify-master:master
             heroku run rake db:migrate
             sleep 5
