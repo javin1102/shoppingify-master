@@ -1,7 +1,8 @@
 import React from "react";
+import Header from "../components/Header";
 
 const ItemPage = () => {
-	return <div>ItemPageasd</div>;
+	return <Header />;
 };
 
 export default ItemPage;
