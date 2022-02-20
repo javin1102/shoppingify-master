@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "../components/Header";
 
-const ItemPage = () => {
+const MainPage = () => {
 	return <Header />;
 };
 
-export default ItemPage;
+export default MainPage;

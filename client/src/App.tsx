@@ -1,15 +1,16 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ItemPage from "./pages/ItemPage";
+import MainPage from "./pages/MainPage";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import "./App.css";
 import axios from "axios";
+import { StylesProvider } from "@mui/styles";
 function App() {
 	axios.defaults.baseURL = process.env.REACT_APP_BASE_API_URL;
 	return (
-		<>
+		<StylesProvider injectFirst={true}>
 			<div className="App">
 				<Helmet>
 					<title>Shoppingify</title>
@@ -28,12 +29,11 @@ function App() {
 					<Routes>
 						<Route path="/register" element={<Register />} />
 						<Route path="/login" element={<Login />} />
-						<Route path="/items" element={<ItemPage />} />
-						<Route path="/history" element={<p>History</p>} />
+						<Route path="/" element={<MainPage />} />
 					</Routes>
 				</Router>
 			</div>
-		</>
+		</StylesProvider>
 	);
 }
 
