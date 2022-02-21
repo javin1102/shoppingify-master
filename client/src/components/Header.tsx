@@ -7,10 +7,6 @@ import {
 	InsertChartOutlinedRounded,
 	ShoppingCartOutlined,
 } from "@mui/icons-material";
-interface NavListProps {
-	stateNum: number;
-}
-
 const HeaderComponent = styled.header`
 	height: 100vh;
 	grid-column: 1;
@@ -22,7 +18,7 @@ const HeaderComponent = styled.header`
 	align-items: center;
 `;
 
-const NavList = styled.ul<NavListProps>`
+const NavList = styled.ul<{ stateNum: number }>`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -99,8 +95,10 @@ const ShoppingCartNumber = styled.div.attrs(() => ({
 	font-weight: 500;
 `;
 
-const Header = () => {
-	const [navState, setNavState] = useState<number>(1);
+const Header: React.FC<{
+	stateNum: number;
+	setState: React.Dispatch<React.SetStateAction<number>>;
+}> = ({ stateNum, setState }) => {
 	return (
 		<HeaderComponent>
 			<img
@@ -108,11 +106,11 @@ const Header = () => {
 				alt="logo"
 				style={{ width: "5rem", height: "5rem", objectFit: "cover" }}
 			/>
-			<NavList stateNum={navState}>
+			<NavList stateNum={stateNum}>
 				<NavItem>
 					<FormatListBulletedRounded
 						className="navlist__icon"
-						onClick={() => setNavState(1)}
+						onClick={() => setState(1)}
 						style={{
 							width: "2.5rem ",
 							height: "2.5rem",
@@ -125,7 +123,7 @@ const Header = () => {
 
 				<NavItem>
 					<ReplayRounded
-						onClick={() => setNavState(2)}
+						onClick={() => setState(2)}
 						style={{
 							width: "2.5rem ",
 							height: "2.5rem",
@@ -138,7 +136,7 @@ const Header = () => {
 
 				<NavItem>
 					<InsertChartOutlinedRounded
-						onClick={() => setNavState(3)}
+						onClick={() => setState(3)}
 						style={{
 							width: "2.5rem ",
 							height: "2.5rem",
