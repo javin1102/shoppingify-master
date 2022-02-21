@@ -13,7 +13,7 @@ interface NavListProps {
 
 const HeaderComponent = styled.header`
 	height: 100vh;
-	width: 10rem;
+	grid-column: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

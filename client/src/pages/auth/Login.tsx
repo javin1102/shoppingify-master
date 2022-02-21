@@ -10,8 +10,7 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import Logo from "../../images/logo.svg";
 import { loginFormIsValid, loginUser } from "../../utils/AuthUtils";
-import axios, { AxiosError } from "axios";
-const Login = () => {
+const Login: React.FC = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const formOnSubmit = async (e: React.FormEvent) => {

@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import React, { useState } from "react";
 import { registerFormIsValid, registerUser } from "../../utils/AuthUtils";
-const Register = () => {
+const Register: React.FC = () => {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [confirm, setConfirm] = useState<string>("");
