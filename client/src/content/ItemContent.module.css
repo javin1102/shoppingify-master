@@ -1,0 +1,21 @@
+.button__add-item {
+	display: none;
+}
+@media only screen and (max-width: 1024px) {
+	.misc-heading-div {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.button__add-item {
+		display: inline-block;
+	}
+}
+
+@media only screen and (max-width: 576px) {
+	.button__add-item {
+		font-size: 1.2rem;
+		padding: 1.5rem !important;
+	}
+}

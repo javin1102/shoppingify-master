@@ -11,3 +11,11 @@ export const Heading2 = styled.h2`
 	line-height: 2.25rem;
 	font-family: "Quicksand", sans-serif;
 `;
+
+export const P = styled.p`
+	font-family: Quicksand;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 1.6rem;
+	line-height: 2rem;
+`;

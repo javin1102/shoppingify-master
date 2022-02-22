@@ -3,12 +3,16 @@ import styled from "styled-components";
 import { Add } from "@mui/icons-material";
 export const HeadingDiv = styled.div`
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
 	width: 100%;
 	margin-bottom: 5rem;
 	flex-wrap: wrap;
 	gap: 3rem;
+
+	@media only screen and (max-width: 1024px) {
+		flex-direction: column;
+	}
 `;
 export const SearchInput = styled.input`
 	width: 100%;
@@ -21,7 +25,25 @@ export const SearchInput = styled.input`
 	outline: none;
 	font-family: "Quicksand", sans-serif;
 	font-weight: 500;
+	@media only screen and (max-width: 576px) {
+		& {
+			padding: 2rem 2rem 2rem 6rem;
+		}
+	}
 `;
+
+export const InputDiv = styled.div`
+	position: relative;
+	width: 27.5rem;
+	display: inline-block;
+
+	@media only screen and (max-width: 678px) {
+		& {
+			width: 20rem;
+		}
+	}
+`;
+
 export const CategoryDiv = styled.div`
 	:not(:last-child) {
 		margin-bottom: 10rem;
@@ -33,6 +55,7 @@ export const ItemList = styled.ul`
 	width: 100%;
 	grid-gap: 3rem;
 `;
+
 const ItemChild = styled.li`
 	position: relative;
 	border-radius: 1rem;

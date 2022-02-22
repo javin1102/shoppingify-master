@@ -8,7 +8,7 @@ import {
 	ShoppingCartOutlined,
 } from "@mui/icons-material";
 const HeaderComponent = styled.header`
-	height: 100vh;
+	height: 100%;
 	grid-column: 1;
 	display: flex;
 	flex-direction: column;
