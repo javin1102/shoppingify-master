@@ -21,8 +21,6 @@ import {
 	TextField,
 	Autocomplete,
 	createFilterOptions,
-	MenuItem,
-	Select,
 	FilterOptionsState,
 } from "@mui/material";
 const MiscAddItemComponent = styled.div`
