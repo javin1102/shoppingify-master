@@ -3,6 +3,28 @@ import beer from "../images/source.svg";
 import { Create, Add, Remove, DeleteOutline } from "@mui/icons-material";
 import { Heading1, Heading2, P } from "../components/TypographyComponents";
 import { Button } from "./ReusableComponents";
+import {
+	MiscAddItemLayout,
+	MiscInputItemLayout,
+	MiscSaveInputItemLayout,
+	MiscShoppingListLayout,
+	SaveItemLayout,
+} from "./LayoutComponents";
+import {
+	LabelField,
+	MiscForm,
+	MiscInputDiv,
+	MiscInputField,
+	TextAreaField,
+} from "./FormComponents";
+import {
+	TextField,
+	Autocomplete,
+	createFilterOptions,
+	MenuItem,
+	Select,
+	FilterOptionsState,
+} from "@mui/material";
 const MiscAddItemComponent = styled.div`
 	width: 100%;
 	border-radius: 2.4rem;
@@ -70,8 +92,24 @@ const MiscShoppingListIncrementerButtonComponent = styled.button`
 	color: #f9a109;
 	cursor: pointer;
 `;
+const SaveItemInput = styled.input`
+	border-radius: 1.2rem;
+	padding: 1.5rem;
+	font-size: 1.4rem;
+	font-weight: 500;
+	border: 2px solid #f9a109;
+	outline: none;
+	width: 100%;
+`;
 
-export const MiscAddItem: React.FC = () => {
+const SaveItemDiv = styled.div`
+	width: 80%;
+	height: 5rem;
+	font-family: "Quicksand", sans-serif;
+	position: relative;
+`;
+
+const MiscAddItemBanner: React.FC = () => {
 	return (
 		<MiscAddItemComponent>
 			<img
@@ -96,7 +134,7 @@ export const MiscAddItem: React.FC = () => {
 	);
 };
 
-export const MiscShoppingListHeader: React.FC = () => {
+const MiscShoppingListHeader: React.FC = () => {
 	return (
 		<MiscShoppingListHeaderComponent>
 			<Heading1 style={{ fontWeight: "700" }}>Shopping List</Heading1>
@@ -105,23 +143,7 @@ export const MiscShoppingListHeader: React.FC = () => {
 	);
 };
 
-export const SaveItemInput = styled.input`
-	border-radius: 1.2rem;
-	padding: 1.5rem;
-	font-size: 1.4rem;
-	font-weight: 500;
-	border: 2px solid #f9a109;
-	outline: none;
-	width: 100%;
-`;
-
-export const SaveItemDiv = styled.div`
-	width: 80%;
-	height: 5rem;
-	font-family: "Quicksand", sans-serif;
-	position: relative;
-`;
-export const MiscShoppingList: React.FC = ({ children }) => {
+const MiscShoppingList: React.FC = ({ children }) => {
 	return (
 		<MiscShoppingListComponent>
 			{children}
@@ -155,5 +177,117 @@ export const MiscShoppingList: React.FC = ({ children }) => {
 				</MiscShoppingListIncrementerComponent>
 			</MiscShoppingListItemComponent>
 		</MiscShoppingListComponent>
+	);
+};
+
+export const MiscAddItem: React.FC = () => {
+	return (
+		<>
+			<MiscAddItemLayout>
+				<MiscAddItemBanner />
+				<MiscShoppingListHeader />
+				<MiscShoppingListLayout>
+					<MiscShoppingList>Fruit and vegetables</MiscShoppingList>
+					<MiscShoppingList>Fruit and vegetables</MiscShoppingList>
+					<MiscShoppingList>Fruit and vegetables</MiscShoppingList>
+					<MiscShoppingList>Fruit and vegetables</MiscShoppingList>
+					<MiscShoppingList>Fruit and vegetables</MiscShoppingList>
+					<MiscShoppingList>Fruit and vegetables</MiscShoppingList>
+					<MiscShoppingList>Fruit and vegetables</MiscShoppingList>
+				</MiscShoppingListLayout>
+			</MiscAddItemLayout>
+			<SaveItemLayout>
+				<SaveItemDiv>
+					<SaveItemInput placeholder="Enter a name" />
+					<Button
+						col="white"
+						bg="#F9A109"
+						pad="1.5rem"
+						style={{ position: "absolute", right: "0", top: "2px" }}
+					>
+						Save
+					</Button>
+				</SaveItemDiv>
+			</SaveItemLayout>
+		</>
+	);
+};
+
+export const MiscInputItem: React.FC = () => {
+	const options = ["One", "Two", "Three", "Four"];
+	const filter = createFilterOptions();
+	return (
+		<>
+			<MiscInputItemLayout>
+				<Heading1 style={{ fontWeight: "600" }}>Add a new item</Heading1>
+				<MiscForm>
+					<MiscInputDiv>
+						<MiscInputField
+							type="text"
+							placeholder="Enter a name"
+							id="item__name"
+						/>
+						<LabelField
+							style={{ fontWeight: "600", fontSize: "1.4rem" }}
+							htmlFor="item__name"
+						>
+							Name
+						</LabelField>
+					</MiscInputDiv>
+					<MiscInputDiv>
+						<TextAreaField placeholder="Enter a note" id="item__note" />
+						<LabelField
+							style={{ fontWeight: "600", fontSize: "1.4rem" }}
+							htmlFor="item__note"
+						>
+							Note (optional)
+						</LabelField>
+					</MiscInputDiv>
+					<MiscInputDiv>
+						<MiscInputField
+							type="text"
+							placeholder="Enter a url"
+							id="item__image"
+						/>
+						<LabelField
+							style={{ fontWeight: "600", fontSize: "1.4rem" }}
+							htmlFor="item__image"
+						>
+							Image (optional)
+						</LabelField>
+					</MiscInputDiv>
+					<MiscInputDiv>
+						<Autocomplete
+							filterOptions={(options, state) => {
+								const filtered = filter(
+									options,
+									state as FilterOptionsState<unknown>,
+								);
+								if (state.inputValue !== "") {
+									filtered.push(`${state.inputValue}`);
+								}
+								return filtered as string[];
+							}}
+							id="item__dropdown"
+							options={options}
+							className="Autocomplete"
+							renderInput={(params) => <TextField {...params} />}
+						/>
+						<LabelField
+							style={{ fontWeight: "600", fontSize: "1.4rem" }}
+							htmlFor="item__dropdown"
+						>
+							Category
+						</LabelField>
+					</MiscInputDiv>
+				</MiscForm>
+			</MiscInputItemLayout>
+			<MiscSaveInputItemLayout>
+				<span>cancel</span>
+				<Button pad="2rem" bg="#f9a109" col="white">
+					Save
+				</Button>
+			</MiscSaveInputItemLayout>
+		</>
 	);
 };

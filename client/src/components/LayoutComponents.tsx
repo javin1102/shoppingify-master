@@ -53,3 +53,26 @@ export const SaveItemLayout = styled.div`
 	justify-content: center;
 	padding: 2rem 4rem;
 `;
+
+export const MiscInputItemLayout = styled.div`
+	padding: 4rem;
+	background-color: transparent;
+`;
+
+export const MiscSaveInputItemLayout = styled.div`
+	background-color: transparent;
+	grid-row: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem 4rem;
+	font-family: "Quicksand", sans-serif;
+	& > *:first-child {
+		margin-right: 5rem;
+		font-size: 1.6rem;
+		font-weight: 700;
+		line-height: 2rem;
+		font-family: inherit;
+		cursor: pointer;
+	}
+`;

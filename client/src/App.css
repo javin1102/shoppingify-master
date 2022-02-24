@@ -40,3 +40,33 @@ html {
 		font-size: 35%;
 	}
 }
+/* MUI Component*/
+
+.Autocomplete > div > *:first-child {
+	font-family: inherit;
+	font-size: 1.2rem;
+	font-weight: 500;
+	margin-bottom: 3rem;
+}
+
+.Autocomplete input:focus ~ fieldset {
+	border-color: #f9a109 !important;
+}
+
+.Autocomplete:focus + label {
+	color: #f9a109 !important;
+}
+.Autocomplete fieldset {
+	border-radius: 1.2rem;
+	border: 2px solid #bdbdbd;
+	font-family: inherit;
+}
+
+.Autocomplete fieldset:hover {
+	outline: none;
+	border-color: #bdbdbd !important;
+}
+.Autocomplete fieldset {
+	outline: none;
+	border-color: #bdbdbd !important;
+}
